@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
 
 function App() {
-  const [textArray, setTextArray] = React.useState([]);
+  const [notes, setNotes] = useState([]);
 
-  function addNote(note) {
-    setTextArray((textArray) => {
-      return [...textArray, note];
+  function addNote(newNote) {
+    setNotes(prevNotes => {
+      return [...prevNotes, newNote];
     });
   }
 
   function deleteNote(id) {
-    setTextArray((textArray) => {
-      return textArray.filter((item, index) => {
-        return id !== index;
+    setNotes(prevNotes => {
+      return prevNotes.filter((noteItem, index) => {
+        return index !== id;
       });
     });
   }
@@ -24,19 +24,18 @@ function App() {
   return (
     <div>
       <Header />
-      <CreateArea clicked={addNote} />
-      {textArray.map((item, index) => {
+      <CreateArea onAdd={addNote} />
+      {notes.map((noteItem, index) => {
         return (
           <Note
             key={index}
             id={index}
-            title={item.title}
-            content={item.content}
-            delete={deleteNote}
+            title={noteItem.title}
+            content={noteItem.content}
+            onDelete={deleteNote}
           />
         );
       })}
-
       <Footer />
     </div>
   );
