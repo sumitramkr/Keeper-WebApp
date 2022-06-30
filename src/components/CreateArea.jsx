@@ -42,13 +42,14 @@ function CreateArea(props) {
   return (
     <div>
       <form className="create-note">
-        <input
-          name="title"
-          onChange={handleChange}
-          value={note.title}
-          placeholder="Title"
-          style={!isClicked ? { display: "none" } : { display: "inline-block" }}
-        />
+        {isClicked && (
+          <input
+            name="title"
+            onChange={handleChange}
+            value={note.title}
+            placeholder="Title"
+          />
+        )}
 
         <textarea
           name="content"
